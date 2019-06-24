@@ -14,6 +14,21 @@ class AuthenticationController < ApplicationController
         end
     end
 
+  # Verify if JWT is valid or not
+  def verify
+        is_valid = Token.verify_token(params[:jwt])
+
+        if(is_valid == true)
+            response =  { content: "Valid", message: "JWT is valid", status: 200 } # Return JWT
+
+            render json: response, status: 200
+        else
+            response =  { content: "No valid", message: "JWT is not valid", status: 400 } # Return JWT
+
+            render json: response, status: 400
+        end
+    end
+
     private
   
     def login_params
